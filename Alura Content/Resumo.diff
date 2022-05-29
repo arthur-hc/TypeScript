@@ -1,0 +1,52 @@
+*** Encapsulamento
+Em JS # é utilizado para encapsular propriedades
+
+Para TS é utilizado o private
+
+Caso deseje que ele possa ser visualizado, mas não alterado, utilize readonly
+
+Quando não há nenhuma das modalidades é a atribuida a classe, assume-se o formato public que pode ser omitido
+
+*** Getters
+Definir um método getter
+
+get Xablau() {
+  return this.#Xablau
+}
+
+*** Modo Watch e compilando com mudanças
+> No script a seguir: qualquer mudança, provoca uma re-compilação e starta o server novamente
+(Nos scripts do package.json)
+scripts: {
+  ...,
+  "server": "lite-server --baseDir=dist",
+  "start": "concurrently \"npm run watch\" \"npm run server\"",
+  "watch": "tsc -w"
+}
+
+*** Evitando compilações com erro e não aceitando any implicito
+(Em tsconfig)
+{
+  "compilerOptions": {
+    ...,
+    "noEmitOnError": true,
+    "noImplicitAny": true
+  }
+}
+
+*** Generics
+Array de negociações:
+private negociations: Negociation[] = []
+
+*** Evitando mutabilidade
+Ao trazer o dado da instância diretamente, ele poderá ser modificado.
+No caso do array, para permitir mudanças mas sem alterar a fonte, poderá ser usado uma cópia do original com spread
+[...this.negociations]
+
+Caso queira que seja o mesmo dado, utilizar o readonly Negociation[]
+
+*** Retirando a necessidade de Getters
+Tranforma a propriedades em public mas adiciona o readonly, assim, ele poderá ser retornado sem um getter, mas não permitindo edição
+
+*** Programação defensiva
+Em casos como Date, readonly não evita a edição devido ao setDate. Assim é necessário tornar a propriedade privada e retornar apenas a sua cópia
