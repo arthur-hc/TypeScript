@@ -50,3 +50,14 @@ Tranforma a propriedades em public mas adiciona o readonly, assim, ele poderá s
 
 *** Programação defensiva
 Em casos como Date, readonly não evita a edição devido ao setDate. Assim é necessário tornar a propriedade privada e retornar apenas a sua cópia
+
+*** Protected
+Caso queira que a propriedade seja acessivel por classes filhas, utilize protected no lugar de private. Assim, a classe filha poderá acessar a propriedade, mas não alterá-la. Também não poderá ser alterada por outra classe.
+
+*** Utilizando tipo genéricos <T>
+Dessa forma, podemos fazer a tipagem dinâmicamente. Exemplo:
+O método update herdado por negociations-view de views.ts receberá como parâmetros negociations, já message-view receberá como parâmetros uma string.
+Dessa forma, ao realizar o extends, devemos especificar o tipo utilizado na classe herdada antes definida com Generics <T>
+
+*** Método abstrato
+Método abstrato é um método que não possui implementação. Ele é herdado e implementado por outra classe filha. Caso não seja implementado, dará erro de compilação.
