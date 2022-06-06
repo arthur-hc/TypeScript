@@ -21,14 +21,20 @@ export class NegociationController {
     this.negociationsView.update(this.negociations);
   }
 
-  add(): void {
-    this.negociations.save(this.createNegociation());
-    this.cleanForms();
-    this.negociationsView.update(this.negociations);
-    this.messageView.update('Negociação adicionada com sucesso!');
+  public add(): void {
+    const negociation = this.createNegociation();
+    if (negociation.date.getDay() > 0 && negociation.date.getDay() < 6) {
+      this.negociations.save(this.createNegociation());
+      this.cleanForms();
+      this.refreshView();
+    } else {
+      this.messageView.update(
+        'Não é possível cadastrar negociações fora do dia útil.'
+      );
+    }
   }
 
-  createNegociation(): Negociation {
+  private createNegociation(): Negociation {
     return new Negociation(
       new Date(this.inputDate.value.replace('-', ',')),
       Number(this.inputQuantity.value),
@@ -36,8 +42,13 @@ export class NegociationController {
     );
   }
 
-  cleanForms(): void {
+  private cleanForms(): void {
     this.forms.reset();
     this.inputDate.focus();
+  }
+
+  private refreshView(): void {
+    this.negociationsView.update(this.negociations);
+    this.messageView.update('View atualizada com sucesso!');
   }
 }

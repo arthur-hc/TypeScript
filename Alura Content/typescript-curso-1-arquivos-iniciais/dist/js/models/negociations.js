@@ -5,7 +5,7 @@ export class Negociations {
     save(negociation) {
         this.negociations.push(negociation);
     }
-    get allNegociations() {
+    allNegociations() {
         return this.negociations;
     }
 }

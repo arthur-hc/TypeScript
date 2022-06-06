@@ -3,11 +3,11 @@ import { Negociation } from './negociation';
 export class Negociations {
   private readonly negociations: Negociation[] = [];
 
-  save(negociation: Negociation): void {
+  public save(negociation: Negociation): void {
     this.negociations.push(negociation);
   }
 
-  get allNegociations(): readonly Negociation[] {
+  public allNegociations(): readonly Negociation[] {
     return this.negociations;
   }
 }

@@ -60,4 +60,7 @@ O método update herdado por negociations-view de views.ts receberá como parâm
 Dessa forma, ao realizar o extends, devemos especificar o tipo utilizado na classe herdada antes definida com Generics <T>
 
 *** Método abstrato
-Método abstrato é um método que não possui implementação. Ele é herdado e implementado por outra classe filha. Caso não seja implementado, dará erro de compilação.
+Método abstrato é um método que não possui implementação. Ele é herdado e implementado por outra classe filha. Caso não seja implementado, dará erro de compilação. No exemplo, template é um método abstrato que deve ser implementado pelas filhas de view.ts, de acordo com a sua necessidade de implementação.
+
+*** Protected para filhas
+Ao colocar na classe pai, e também nas filhas, o método poderá ser utilizado internamente, mas não acessado. Assim, após a instância, não poderá ser executado.
