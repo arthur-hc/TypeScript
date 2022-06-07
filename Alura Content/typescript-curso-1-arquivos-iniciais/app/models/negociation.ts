@@ -14,4 +14,15 @@ export class Negociation {
     const data = new Date(this._date.getTime());
     return data;
   }
+
+  public static create(
+    dateString: string,
+    quantityString: string,
+    valueString: string
+  ): Negociation {
+    const date = new Date(dateString.replace('-', ','));
+    const quantity = Number(quantityString);
+    const value = Number(valueString);
+    return new Negociation(date, quantity, value);
+  }
 }

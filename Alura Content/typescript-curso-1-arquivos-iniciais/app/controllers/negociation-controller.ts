@@ -2,6 +2,7 @@ import { Negociation } from '../models/negociation.js';
 import { Negociations } from '../models/negociations.js';
 import { NegociationsView } from '../views/negociations-view.js';
 import { MessageView } from '../views/message-view.js';
+import { daysOfWeek } from '../enums/daysOfWeek.js';
 
 export class NegociationController {
   private inputDate: HTMLInputElement;
@@ -9,7 +10,7 @@ export class NegociationController {
   private inputValue: HTMLInputElement;
   private forms: HTMLFormElement;
   private negociations: Negociations;
-  private negociationsView = new NegociationsView('#negociationsView');
+  private negociationsView = new NegociationsView('#negociationsView', true);
   private messageView = new MessageView('#mensagemView');
 
   constructor() {
@@ -22,24 +23,20 @@ export class NegociationController {
   }
 
   public add(): void {
-    const negociation = this.createNegociation();
-    if (negociation.date.getDay() > 0 && negociation.date.getDay() < 6) {
-      this.negociations.save(this.createNegociation());
-      this.cleanForms();
-      this.refreshView();
-    } else {
+    const negociation = Negociation.create(
+      this.inputDate.value,
+      this.inputQuantity.value,
+      this.inputValue.value
+    );
+    if (!this.isUtilDay(negociation.date.getDay())) {
       this.messageView.update(
         'Não é possível cadastrar negociações fora do dia útil.'
       );
+      return;
     }
-  }
-
-  private createNegociation(): Negociation {
-    return new Negociation(
-      new Date(this.inputDate.value.replace('-', ',')),
-      Number(this.inputQuantity.value),
-      Number(this.inputValue.value)
-    );
+    this.negociations.save(negociation);
+    this.cleanForms();
+    this.refreshView();
   }
 
   private cleanForms(): void {
@@ -50,5 +47,9 @@ export class NegociationController {
   private refreshView(): void {
     this.negociationsView.update(this.negociations);
     this.messageView.update('View atualizada com sucesso!');
+  }
+
+  isUtilDay(day: number): boolean {
+    return day > daysOfWeek.SUNDAY && day < daysOfWeek.SATURDAY;
   }
 }
