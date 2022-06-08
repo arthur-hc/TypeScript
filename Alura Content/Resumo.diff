@@ -71,3 +71,18 @@ Permitem acessar a função sem a necessidade de instânciar a classe. No exempl
 *** Parâmetros Opcionais
 Para declarar parâmetros opcionais no método, utilize o ?
 Ex: escape?: boolean
+
+*** StrictNullChecks
+Se ativada como true no tsconfig, o TS passa não aceitar null ou undefined como possíveis retornos. Assim, o desenvolver precisa fazer um casting (transformação do retorno).
+- this.inputDate = <HTMLInputElement>document.querySelector('#data');
+OU
+- this.inputDate = <HTMLInputElement>document.querySelector('#data') as HTMLInputElement;
+
+> Neste caso, "obrigamos" o ts a aceitar, mas para outras situações, é indicado tratar essa possíbilidade. O Próprio TS entende que está sendo verificado se o retorno não é null.
+const form = document.querySelector('.form');
+if (form) {
+  form.addEventListener('submit', (event: Event) => {
+    event.preventDefault();
+    controller.add();
+  });
+}

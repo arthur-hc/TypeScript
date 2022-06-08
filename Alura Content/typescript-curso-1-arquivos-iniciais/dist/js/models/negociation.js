@@ -8,7 +8,6 @@ export class Negociation {
         return this.quantity * this.value;
     }
     get date() {
-        // Tornando o data privado e retornando uma cópia apenas, evitando a alteração da propriedade
         const data = new Date(this._date.getTime());
         return data;
     }
