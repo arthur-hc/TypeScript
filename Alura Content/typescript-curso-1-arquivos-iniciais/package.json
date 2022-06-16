@@ -14,9 +14,15 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^6.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "lite-server": "^2.6.1"
   },
   "dependencies": {
     "typescript": "^4.2.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
