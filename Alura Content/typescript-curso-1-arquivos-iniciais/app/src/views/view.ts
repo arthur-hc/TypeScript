@@ -1,3 +1,5 @@
+import { logExecutionTime } from '../decorators/log-execution-time.js';
+
 export abstract class View<T> {
   protected element: HTMLElement;
   private escape: boolean = false;
@@ -14,6 +16,7 @@ export abstract class View<T> {
     }
   }
 
+  @logExecutionTime()
   public update(model: T): void {
     let template = this.template(model);
     if (this.escape) {

@@ -3,6 +3,7 @@ import { Negociations } from '../models/negociations.js';
 import { NegociationsView } from '../views/negociations-view.js';
 import { MessageView } from '../views/message-view.js';
 import { daysOfWeek } from '../enums/daysOfWeek.js';
+import { logExecutionTime } from '../decorators/log-execution-time.js';
 
 export class NegociationController {
   private inputDate: HTMLInputElement;
@@ -24,6 +25,7 @@ export class NegociationController {
     this.negociationsView.update(this.negociations);
   }
 
+  @logExecutionTime()
   public add(): void {
     const negociation = Negociation.create(
       this.inputDate.value,
