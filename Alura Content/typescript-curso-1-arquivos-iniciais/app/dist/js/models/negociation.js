@@ -11,6 +11,18 @@ export class Negociation {
         const data = new Date(this._date.getTime());
         return data;
     }
+    toText() {
+        return `
+      Data: ${this.date}
+      Quantidade: ${this.quantity}
+      Valor: ${this.value}
+      `;
+    }
+    isEqual(negociation) {
+        return (this.date.getDate() === negociation.date.getDate() &&
+            this.date.getMonth() === negociation.date.getMonth() &&
+            this.date.getFullYear() === negociation.date.getFullYear());
+    }
     static create(dateString, quantityString, valueString) {
         const date = new Date(dateString.replace('-', ','));
         const quantity = Number(quantityString);
@@ -18,3 +30,4 @@ export class Negociation {
         return new Negociation(date, quantity, value);
     }
 }
+//# sourceMappingURL=negociation.js.map

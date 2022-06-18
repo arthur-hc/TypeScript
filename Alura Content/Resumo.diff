@@ -86,3 +86,40 @@ if (form) {
     controller.add();
   });
 }
+
+
+*** Decorators
+Decorators são funções que são utilizadas para modificar o comportamento de uma classe ou método. No exemplo, o método add é executado da mesma forma, mas passa a exibir o tempo de execução devido ao acréscimo do decorator.
+  => Para seu funcionamento, é preciso adicionar "experimentalDecorators": true no tsconfig.json
+
+*** Ordem dos decorators
+A ordem de execução é por posição, ou seja, o primeiro decorator é executado primeiro. Contudo, espeará primeiro os internos terminarem a execução e em seguida retornar até chegar na última camada de funções. Exemplo:
+- Executa inspect
+- Executa log
+- Executa decorada
+- Retorna decorada
+- Retorna log com o valor da decordada
+- Retorna inspect com o valor de log
+
+*** Decorators sem parâmetros
+CASO O DECORATOR NÃO RECEBA PARAMETROS, ELE PODE SER DIRETAMENTE USADO SOBRE A FUNÇÃO e para sua chamada basta apenas @<nomeDoDecorator>
+
+*** Decorators para propriedades não estáticas
+Será necessárias acessá-las através de um getter. Para adicionar um getter da propriedade, utilize Object.defineProperty(target, propertyKey, { get: getter });
+
+*** Interfaces
+Interfaces são usadas para definir o tipo de um objeto. No exemplo, a interface Negociation define o tipo de um objeto que representa uma negociação.
+
+*** Super
+Ao herdar uma classe e possuir seu construtor, a classe filha precisa "ativar" o construtor da classe pai. Para isso, utiliza-se o super.
+
+*** Poliformismo
+É a capacidade que um objeto tem de ser referenciado de multiplas formas. No exemplo, negociation e negociations são oriundas da classe abstrata allowsPrint, que possui um método abstrato toText deverá retornar uma string. Assim, todas as filhas serão obrigadas a implementar este método e será possível garantir que no método print apenas classe dessa origem serão passadas como parâmetro.
+
+*** Interfaces como contrato
+Classes só podem ser herdeiras de uma classe. Assim, caso a necessidade seja apenas garantir que a classe possua um certo comportamento, é possível através de uma interface.
+> Não será mais necessário utilizar super()
+> Utiliza-se implements ao invés de extends
+
+*** Debugando c/ TypeScript
+Utilizar sourcemap no tsconfig.json e compartilhar as pastas (No package json, o compilador possui acesso a pasta app, não somente a dist)
