@@ -103,3 +103,6 @@ A ordem de execução é por posição, ou seja, o primeiro decorator é executa
 
 *** Decorators sem parâmetros
 CASO O DECORATOR NÃO RECEBA PARAMETROS, ELE PODE SER DIRETAMENTE USADO SOBRE A FUNÇÃO e para sua chamada basta apenas @<nomeDoDecorator>
+
+*** Decorators para propriedades não estáticas
+Será necessárias acessá-las através de um getter. Para adicionar um getter da propriedade, utilize Object.defineProperty(target, propertyKey, { get: getter });

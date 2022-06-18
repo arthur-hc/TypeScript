@@ -5,22 +5,24 @@ import { MessageView } from '../views/message-view.js';
 import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { logExecutionTime } from '../decorators/log-execution-time.js';
 import { inspect } from '../decorators/inspect.js';
+import { domInjector } from '../decorators/dom-injector.js';
 
 export class NegociationController {
+  @domInjector('#data')
   private inputDate: HTMLInputElement;
+
+  @domInjector('#quantidade')
   private inputQuantity: HTMLInputElement;
+
+  @domInjector('#valor')
   private inputValue: HTMLInputElement;
+
   private forms: HTMLFormElement;
   private negociations: Negociations;
   private negociationsView = new NegociationsView('#negociationsView');
   private messageView = new MessageView('#mensagemView');
 
   constructor() {
-    this.inputDate = <HTMLInputElement>document.querySelector('#data');
-    this.inputQuantity = document.querySelector(
-      '#quantidade'
-    ) as HTMLInputElement;
-    this.inputValue = <HTMLInputElement>document.querySelector('#valor');
     this.forms = <HTMLFormElement>document.querySelector('.form');
     this.negociations = new Negociations();
     this.negociationsView.update(this.negociations);

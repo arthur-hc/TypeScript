@@ -11,13 +11,11 @@ import { MessageView } from '../views/message-view.js';
 import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { logExecutionTime } from '../decorators/log-execution-time.js';
 import { inspect } from '../decorators/inspect.js';
+import { domInjector } from '../decorators/dom-injector.js';
 export class NegociationController {
     constructor() {
         this.negociationsView = new NegociationsView('#negociationsView');
         this.messageView = new MessageView('#mensagemView');
-        this.inputDate = document.querySelector('#data');
-        this.inputQuantity = document.querySelector('#quantidade');
-        this.inputValue = document.querySelector('#valor');
         this.forms = document.querySelector('.form');
         this.negociations = new Negociations();
         this.negociationsView.update(this.negociations);
@@ -44,6 +42,15 @@ export class NegociationController {
         return day > daysOfWeek.SUNDAY && day < daysOfWeek.SATURDAY;
     }
 }
+__decorate([
+    domInjector('#data')
+], NegociationController.prototype, "inputDate", void 0);
+__decorate([
+    domInjector('#quantidade')
+], NegociationController.prototype, "inputQuantity", void 0);
+__decorate([
+    domInjector('#valor')
+], NegociationController.prototype, "inputValue", void 0);
 __decorate([
     inspect,
     logExecutionTime(true)
