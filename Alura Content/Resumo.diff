@@ -109,3 +109,17 @@ Será necessárias acessá-las através de um getter. Para adicionar um getter d
 
 *** Interfaces
 Interfaces são usadas para definir o tipo de um objeto. No exemplo, a interface Negociation define o tipo de um objeto que representa uma negociação.
+
+*** Super
+Ao herdar uma classe e possuir seu construtor, a classe filha precisa "ativar" o construtor da classe pai. Para isso, utiliza-se o super.
+
+*** Poliformismo
+É a capacidade que um objeto tem de ser referenciado de multiplas formas. No exemplo, negociation e negociations são oriundas da classe abstrata allowsPrint, que possui um método abstrato toText deverá retornar uma string. Assim, todas as filhas serão obrigadas a implementar este método e será possível garantir que no método print apenas classe dessa origem serão passadas como parâmetro.
+
+*** Interfaces como contrato
+Classes só podem ser herdeiras de uma classe. Assim, caso a necessidade seja apenas garantir que a classe possua um certo comportamento, é possível através de uma interface.
+> Não será mais necessário utilizar super()
+> Utiliza-se implements ao invés de extends
+
+*** Debugando c/ TypeScript
+Utilizar sourcemap no tsconfig.json e compartilhar as pastas (No package json, o compilador possui acesso a pasta app, não somente a dist)

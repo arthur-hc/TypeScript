@@ -1,4 +1,6 @@
-export class Negociation {
+import { Model } from '../interfaces/model.js';
+
+export class Negociation implements Model<Negociation> {
   constructor(
     private readonly _date: Date,
     public readonly value: number,
@@ -13,6 +15,22 @@ export class Negociation {
     // Tornando o data privado e retornando uma cópia apenas, evitando a alteração da propriedade
     const data = new Date(this._date.getTime());
     return data;
+  }
+
+  public toText(): string {
+    return `
+      Data: ${this.date}
+      Quantidade: ${this.quantity}
+      Valor: ${this.value}
+      `;
+  }
+
+  public isEqual(negociation: Negociation): boolean {
+    return (
+      this.date.getDate() === negociation.date.getDate() &&
+      this.date.getMonth() === negociation.date.getMonth() &&
+      this.date.getFullYear() === negociation.date.getFullYear()
+    );
   }
 
   public static create(

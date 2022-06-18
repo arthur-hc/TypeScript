@@ -17,3 +17,4 @@ if (!importButton) {
 importButton.addEventListener('click', () => {
     controller.importData();
 });
+//# sourceMappingURL=app.js.map

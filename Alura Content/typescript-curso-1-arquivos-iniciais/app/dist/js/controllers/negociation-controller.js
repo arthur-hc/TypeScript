@@ -13,15 +13,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { domInjector } from '../decorators/dom-injector.js';
+import { inspect } from '../decorators/inspect.js';
+import { logExecutionTime } from '../decorators/log-execution-time.js';
+import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { Negociation } from '../models/negociation.js';
 import { Negociations } from '../models/negociations.js';
-import { NegociationsView } from '../views/negociations-view.js';
-import { MessageView } from '../views/message-view.js';
-import { daysOfWeek } from '../enums/daysOfWeek.js';
-import { logExecutionTime } from '../decorators/log-execution-time.js';
-import { inspect } from '../decorators/inspect.js';
-import { domInjector } from '../decorators/dom-injector.js';
 import { NegociationsService } from '../services/negociations-service.js';
+import { print } from '../utils/print.js';
+import { MessageView } from '../views/message-view.js';
+import { NegociationsView } from '../views/negociations-view.js';
 export class NegociationController {
     constructor() {
         this.negociationsView = new NegociationsView('#negociationsView');
@@ -34,7 +35,13 @@ export class NegociationController {
     importData() {
         return __awaiter(this, void 0, void 0, function* () {
             const negociationsDay = yield this.service.getNegociationsDay();
-            negociationsDay.forEach((negociation) => {
+            negociationsDay
+                .filter((negociation) => {
+                return !this.negociations
+                    .allNegociations()
+                    .some((negociationSaved) => negociation.isEqual(negociationSaved));
+            })
+                .forEach((negociation) => {
                 this.negociations.save(negociation);
             });
             this.refreshView();
@@ -47,6 +54,7 @@ export class NegociationController {
             return;
         }
         this.negociations.save(negociation);
+        print(negociation, this.negociations);
         this.cleanForms();
         this.refreshView();
     }
@@ -75,3 +83,4 @@ __decorate([
     inspect,
     logExecutionTime(true)
 ], NegociationController.prototype, "add", null);
+//# sourceMappingURL=negociation-controller.js.map

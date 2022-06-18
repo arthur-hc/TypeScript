@@ -1,13 +1,13 @@
+import { domInjector } from '../decorators/dom-injector.js';
+import { inspect } from '../decorators/inspect.js';
+import { logExecutionTime } from '../decorators/log-execution-time.js';
+import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { Negociation } from '../models/negociation.js';
 import { Negociations } from '../models/negociations.js';
-import { NegociationsView } from '../views/negociations-view.js';
-import { MessageView } from '../views/message-view.js';
-import { daysOfWeek } from '../enums/daysOfWeek.js';
-import { logExecutionTime } from '../decorators/log-execution-time.js';
-import { inspect } from '../decorators/inspect.js';
-import { domInjector } from '../decorators/dom-injector.js';
-import { NegociationDay } from '../interfaces/negociation-day.js';
 import { NegociationsService } from '../services/negociations-service.js';
+import { print } from '../utils/print.js';
+import { MessageView } from '../views/message-view.js';
+import { NegociationsView } from '../views/negociations-view.js';
 
 export class NegociationController {
   @domInjector('#data')
@@ -33,9 +33,15 @@ export class NegociationController {
 
   async importData(): Promise<void> {
     const negociationsDay = await this.service.getNegociationsDay();
-    negociationsDay.forEach((negociation: Negociation): void => {
-      this.negociations.save(negociation);
-    });
+    negociationsDay
+      .filter((negociation: Negociation) => {
+        return !this.negociations
+          .allNegociations()
+          .some((negociationSaved) => negociation.isEqual(negociationSaved));
+      })
+      .forEach((negociation: Negociation): void => {
+        this.negociations.save(negociation);
+      });
     this.refreshView();
   }
 
@@ -54,6 +60,7 @@ export class NegociationController {
       return;
     }
     this.negociations.save(negociation);
+    print(negociation, this.negociations);
     this.cleanForms();
     this.refreshView();
   }
