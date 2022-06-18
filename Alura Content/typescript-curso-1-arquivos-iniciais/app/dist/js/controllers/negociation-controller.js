@@ -4,6 +4,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Negociation } from '../models/negociation.js';
 import { Negociations } from '../models/negociations.js';
 import { NegociationsView } from '../views/negociations-view.js';
@@ -12,13 +21,24 @@ import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { logExecutionTime } from '../decorators/log-execution-time.js';
 import { inspect } from '../decorators/inspect.js';
 import { domInjector } from '../decorators/dom-injector.js';
+import { NegociationsService } from '../services/negociations-service.js';
 export class NegociationController {
     constructor() {
         this.negociationsView = new NegociationsView('#negociationsView');
         this.messageView = new MessageView('#mensagemView');
+        this.service = new NegociationsService();
         this.forms = document.querySelector('.form');
         this.negociations = new Negociations();
         this.negociationsView.update(this.negociations);
+    }
+    importData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const negociationsDay = yield this.service.getNegociationsDay();
+            negociationsDay.forEach((negociation) => {
+                this.negociations.save(negociation);
+            });
+            this.refreshView();
+        });
     }
     add() {
         const negociation = Negociation.create(this.inputDate.value, this.inputQuantity.value, this.inputValue.value);

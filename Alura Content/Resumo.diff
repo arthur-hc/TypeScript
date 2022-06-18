@@ -106,3 +106,6 @@ CASO O DECORATOR NÃO RECEBA PARAMETROS, ELE PODE SER DIRETAMENTE USADO SOBRE A 
 
 *** Decorators para propriedades não estáticas
 Será necessárias acessá-las através de um getter. Para adicionar um getter da propriedade, utilize Object.defineProperty(target, propertyKey, { get: getter });
+
+*** Interfaces
+Interfaces são usadas para definir o tipo de um objeto. No exemplo, a interface Negociation define o tipo de um objeto que representa uma negociação.

@@ -6,6 +6,8 @@ import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { logExecutionTime } from '../decorators/log-execution-time.js';
 import { inspect } from '../decorators/inspect.js';
 import { domInjector } from '../decorators/dom-injector.js';
+import { NegociationDay } from '../interfaces/negociation-day.js';
+import { NegociationsService } from '../services/negociations-service.js';
 
 export class NegociationController {
   @domInjector('#data')
@@ -21,11 +23,20 @@ export class NegociationController {
   private negociations: Negociations;
   private negociationsView = new NegociationsView('#negociationsView');
   private messageView = new MessageView('#mensagemView');
+  private service = new NegociationsService();
 
   constructor() {
     this.forms = <HTMLFormElement>document.querySelector('.form');
     this.negociations = new Negociations();
     this.negociationsView.update(this.negociations);
+  }
+
+  async importData(): Promise<void> {
+    const negociationsDay = await this.service.getNegociationsDay();
+    negociationsDay.forEach((negociation: Negociation): void => {
+      this.negociations.save(negociation);
+    });
+    this.refreshView();
   }
 
   @inspect
