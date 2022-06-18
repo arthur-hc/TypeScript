@@ -4,6 +4,7 @@ import { NegociationsView } from '../views/negociations-view.js';
 import { MessageView } from '../views/message-view.js';
 import { daysOfWeek } from '../enums/daysOfWeek.js';
 import { logExecutionTime } from '../decorators/log-execution-time.js';
+import { inspect } from '../decorators/inspect.js';
 
 export class NegociationController {
   private inputDate: HTMLInputElement;
@@ -11,7 +12,7 @@ export class NegociationController {
   private inputValue: HTMLInputElement;
   private forms: HTMLFormElement;
   private negociations: Negociations;
-  private negociationsView = new NegociationsView('#negociationsView', true);
+  private negociationsView = new NegociationsView('#negociationsView');
   private messageView = new MessageView('#mensagemView');
 
   constructor() {
@@ -25,7 +26,8 @@ export class NegociationController {
     this.negociationsView.update(this.negociations);
   }
 
-  @logExecutionTime()
+  @inspect
+  @logExecutionTime(true)
   public add(): void {
     const negociation = Negociation.create(
       this.inputDate.value,

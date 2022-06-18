@@ -91,3 +91,15 @@ if (form) {
 *** Decorators
 Decorators são funções que são utilizadas para modificar o comportamento de uma classe ou método. No exemplo, o método add é executado da mesma forma, mas passa a exibir o tempo de execução devido ao acréscimo do decorator.
   => Para seu funcionamento, é preciso adicionar "experimentalDecorators": true no tsconfig.json
+
+*** Ordem dos decorators
+A ordem de execução é por posição, ou seja, o primeiro decorator é executado primeiro. Contudo, espeará primeiro os internos terminarem a execução e em seguida retornar até chegar na última camada de funções. Exemplo:
+- Executa inspect
+- Executa log
+- Executa decorada
+- Retorna decorada
+- Retorna log com o valor da decordada
+- Retorna inspect com o valor de log
+
+*** Decorators sem parâmetros
+CASO O DECORATOR NÃO RECEBA PARAMETROS, ELE PODE SER DIRETAMENTE USADO SOBRE A FUNÇÃO e para sua chamada basta apenas @<nomeDoDecorator>
